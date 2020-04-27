@@ -1,0 +1,41 @@
+#:kivy 1.11.1
+
+<PopChoise>:
+    posisi:2
+    pos_hint:{"center_x":.5,"center_y":self.posisi}
+    Button
+        pos_hint:{"center_x":.5,"center_y":.5}
+        background_color:0,0,0,.8
+        on_press:root.posisi=2
+    BoxLayout:
+
+        canvas:
+            Color:
+                rgba:0,1,1,1
+            Rectangle:
+                size:self.size
+                pos:self.pos
+                source:"img/frame2.png"
+        padding:2
+        spacing:2
+        size_hint:.8,.7
+        pos_hint:{"center_x":.5,"center_y":.5}
+        orientation:"vertical"
+        Btn:
+            text:"saklar"
+            font_name:"fonts/modern.ttf"
+            font_size:self.height/6
+            color:0,1,1,1
+            on_press:root.press(self.text)
+        Btn:
+            text:"slider"
+            font_name:"fonts/modern.ttf"
+            font_size:self.height/6
+            color:0,1,1,1
+            on_press:root.press(self.text)
+        Btn:
+            text:"monitor"
+            font_name:"fonts/modern.ttf"
+            font_size:self.height/6
+            color:0,1,1,1
+            on_press:root.press(self.text)

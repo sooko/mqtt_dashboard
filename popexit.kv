@@ -1,0 +1,27 @@
+<PopExit>:
+
+    BoxLayout
+        orientation:"vertical"
+        size_hint:.8,.3
+        pos_hint:{"center_x":.5,"center_y":root.posisi}
+        canvas:
+            Color:
+                rgba:0,1,1,1
+            Rectangle:
+                size:self.size
+                pos:self.pos
+                source:"img/frame.png"
+                
+        Label:
+            text:"are you sure want to exit ?"
+            font_size:self.height/5
+        BoxLayout
+            Btn:
+                text:"NO"
+                on_press:root.posisi=2
+            Btn
+                text:"YES"
+                on_press:root.exit()
+        
+
+        

@@ -1,0 +1,143 @@
+<TextInputS@TextInput>:
+    background_color:1,1,1,.1
+    foreground_color:0,1,1,1
+    halign:"center"
+    valign:"middle"
+    text_size:self.size
+    multiline:False
+<GarisTegak@Label>:
+    size_hint:None,.8
+    pos_hint:{"center_x":.5,"center_y":.5}
+    width:"2sp"
+    canvas:
+        Color:
+            rgba:0,1,1,1
+        Rectangle:
+            size:self.size
+            pos:self.pos
+<Saklar>:
+    pos_hint:{"center_x":.5,"top":1}
+    size_hint:1,None
+    height:"90sp"
+    ScreenManager:
+        pos_hint:{"center_x":.5,"center_y":.5}
+        id:sm
+        Screen:
+            name:"idle"
+            ToggleButton:
+                state:root.state
+                on_press:
+                    root.status=root.message1 if self.state=="down" else root.message2
+                    app.publish(root.topic,root.status)
+                    root.status_color=[0,1,0,1] if self.state=="down" else [1,0,0,1]
+                    root.state=self.state
+                background_color:1,1,1,.2
+                pos_hint:{"center_x":.5,"center_y":.5}
+            BoxLayout
+                pos_hint:{"center_x":.5,"center_y":.5}
+                BtnImg:
+                    source:"img/setting.png"
+                    size_hint:.15,1
+                    color:0,1,1,1
+                    on_release:
+                        sm.current="edit"
+                        root.height="140sp"
+                        
+                Label
+                    text:root.device_name
+                    font_name:"fonts/modern.ttf"
+                    color:0,1,1,1
+                    font_size:self.height/3
+                GarisTegak
+                Label:
+                    id:lbl
+                    size_hint:.4,1
+                    text:root.status
+                    color:root.status_color
+                    font_name:"fonts/modern.ttf"
+                    font_size:self.height/3
+        Screen:
+            name:"edit"
+            BoxLayout
+                canvas:
+                    Color:
+                        rgba:.3,.3,.3,.3
+                    Rectangle:
+                        size:self.size
+                        pos:self.pos
+                pos_hint:{"center_x":.5,"center_y":.5}
+                BoxLayout:
+                    orientation:"vertical"
+                    size_hint:.2,1
+                    BtnImg:
+                        source:"img/3btn.png"
+                        color:0,1,1,1
+                        on_release:
+                            sm.current="idle"
+                            root.height="90sp"
+                            app.subscribe(root.topic)
+                        
+                    BtnImg:
+                        source:"img/dell.png"
+                        color:0,1,1,1
+                        on_release:root.parent.remove_widget(root)
+                        
+                    
+
+                BoxLayout
+                    size_hint:.45,1
+                    orientation:"vertical"
+                    Label
+                        text:"device name"
+                        color:0,1,1,1
+                    Label
+                        text:"topic"
+                        color:0,1,1,1
+                    Label
+                        text:"message 1"
+                        color:0,1,1,1
+                    Label
+                        text:"message 2"
+                        color:0,1,1,1
+                    Label
+                        text:"publish only"
+                        color:0,1,1,1
+                    
+                BoxLayout
+                    size_hint:.05,1
+                    orientation:"vertical"
+                    Label
+                        text:":"
+                        color:0,1,1,1
+                    Label
+                        text:":"
+                        color:0,1,1,1
+                    Label
+                        text:":"
+                        color:0,1,1,1
+                    Label
+                        text:":"
+                        color:0,1,1,1
+                    Label
+                        text:":"
+                        color:0,1,1,1
+                    
+                BoxLayout
+                    orientation:"vertical"
+                    TextInputS
+                        text:root.device_name
+                        on_text:root.device_name=self.text
+                    TextInputS
+                        text:root.topic
+                        on_text:root.topic=self.text
+                    TextInputS
+                        text:root.message1
+                        on_text:root.message1=self.text
+                    TextInputS
+                        text:root.message2
+                        on_text:root.message2=self.text
+                    CheckBox:
+                        active:root.publish_only
+                        on_active:
+                            root.publish_only=self.active
+                        
